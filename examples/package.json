@@ -1,0 +1,16 @@
+{
+  "name": "zxei-icons-examples",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "vue": "^3.3.4",
+    "zxei-icons": "file:.."
+  },
+  "devDependencies": {
+    "@vue/cli-service": "^5.0.8"
+  }
+} 
