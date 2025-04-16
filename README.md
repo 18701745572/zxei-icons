@@ -1,17 +1,34 @@
-# ZXEI Icons
+# zxei-icons
 
-一个基于SVG的Vue图标组件库，提供了丰富的图标集合。
+Vue3 SVG 图标组件库
+
+[![npm version](https://img.shields.io/npm/v/zxei-icons.svg)](https://www.npmjs.com/package/zxei-icons)
+[![npm downloads](https://img.shields.io/npm/dm/zxei-icons.svg)](https://www.npmjs.com/package/zxei-icons)
+[![license](https://img.shields.io/npm/l/zxei-icons.svg)](https://github.com/jianghuizhong/zxei-icons/blob/main/LICENSE)
+[![CI](https://github.com/18701745572/zxei-icons/actions/workflows/ci.yml/badge.svg)](https://github.com/18701745572/zxei-icons/actions/workflows/ci.yml)
+
+一个简洁、易用的Vue3 SVG图标组件库，支持按需引入和全局注册。
+
+## 特性
+
+- 🚀 **按需引入**: 只打包你需要的图标
+- 🎨 **自定义样式**: 可以自定义颜色、大小等属性
+- 💪 **TypeScript支持**: 包含完整的类型定义
+- 🔍 **组件化**: 每个图标都是一个独立的Vue组件
+- 📦 **零依赖**: 没有额外的依赖
+- 🌐 **SSR支持**: 支持服务端渲染
 
 ## 安装
 
 ```bash
+# 使用npm
 npm install zxei-icons
-```
 
-或者
-
-```bash
+# 使用yarn
 yarn add zxei-icons
+
+# 使用pnpm
+pnpm add zxei-icons
 ```
 
 ## 使用方法
@@ -19,13 +36,13 @@ yarn add zxei-icons
 ### 全局注册
 
 ```js
-import { createApp } from 'vue';
-import App from './App.vue';
-import ZxeiIcons from 'zxei-icons';
+import { createApp } from 'vue'
+import App from './App.vue'
+import ZxeiIcons from 'zxei-icons'
 
-const app = createApp(App);
-app.use(ZxeiIcons);
-app.mount('#app');
+const app = createApp(App)
+app.use(ZxeiIcons)
+app.mount('#app')
 ```
 
 ### 按需引入
@@ -33,39 +50,103 @@ app.mount('#app');
 ```vue
 <template>
   <div>
-    <ArrowDownFill :size="24" color="red" />
+    <ArrowRightFill />
+    <ArrowLeftFill :size="32" color="red" />
   </div>
 </template>
 
 <script>
-import { ArrowDownFill } from 'zxei-icons';
+import { ArrowRightFill, ArrowLeftFill } from 'zxei-icons'
 
 export default {
   components: {
-    ArrowDownFill
+    ArrowRightFill,
+    ArrowLeftFill
   }
 }
 </script>
 ```
 
-### 按类别引入
+### 在 Vue3 Composition API 中使用
 
 ```vue
 <template>
   <div>
-    <ArrowDownFill :size="24" color="red" />
-    <ArrowUpFill :size="24" color="blue" />
+    <ArrowRightFill />
+    <component :is="dynamicIcon" :size="32" color="blue" />
   </div>
 </template>
 
-<script>
-import * as ArrowIcons from 'zxei-icons/src/components/arrow';
+<script setup>
+import { ref } from 'vue';
+import { ArrowRightFill, ArrowLeftFill } from 'zxei-icons';
 
-export default {
-  components: {
-    ...ArrowIcons
+const dynamicIcon = ref(ArrowLeftFill);
+
+// 动态更改图标
+const changeIcon = () => {
+  dynamicIcon.value = ArrowRightFill;
+};
+</script>
+```
+
+### 自定义主题
+
+你可以创建一个图标包装组件来实现统一的样式设置：
+
+```vue
+<!-- IconWrapper.vue -->
+<template>
+  <component 
+    :is="icon" 
+    :size="size" 
+    :color="theme[colorType]" 
+    v-bind="$attrs"
+  />
+</template>
+
+<script setup>
+import { computed } from 'vue';
+
+const props = defineProps({
+  icon: {
+    type: Object,
+    required: true
+  },
+  size: {
+    type: [Number, String],
+    default: 24
+  },
+  colorType: {
+    type: String,
+    default: 'primary'
   }
-}
+});
+
+// 定义主题颜色
+const theme = {
+  primary: '#3498db',
+  success: '#2ecc71',
+  warning: '#f1c40f',
+  danger: '#e74c3c',
+  info: '#1abc9c'
+};
+</script>
+```
+
+然后这样使用：
+
+```vue
+<template>
+  <div>
+    <IconWrapper :icon="ArrowRightFill" colorType="primary" />
+    <IconWrapper :icon="AlertFill" colorType="danger" size="32" />
+  </div>
+</template>
+
+<script setup>
+import { ArrowRightFill, AlertFill } from 'zxei-icons';
+import IconWrapper from './IconWrapper.vue';
 </script>
 ```
 
@@ -73,86 +154,106 @@ export default {
 
 所有图标组件都接受以下属性：
 
-| 属性名 | 类型 | 默认值 | 说明 |
-| ------ | ---- | ------ | ---- |
-| size | Number, String | 24 | 图标大小，单位为像素 |
-| color | String | 'currentColor' | 图标颜色，可以是任何有效的CSS颜色值 |
+- `size`: 图标大小，默认为 24px
+- `color`: 图标颜色，默认为 currentColor
+- `stroke`: 描边颜色，默认为 none
+- `strokeWidth`: 描边宽度，默认为 0
 
-## 可用图标
+## 组件列表
 
-本库包含以下类别的图标：
+该库包含以下类别的图标：
 
-- arrow - 箭头类图标
-- building - 建筑类图标
-- business - 商业类图标
-- contact - 联系类图标
-- crypto - 加密货币类图标
-- design - 设计类图标
-- development - 开发类图标
-- device - 设备类图标
-- editor - 编辑器类图标
-- education - 教育类图标
-- emoji - 表情类图标
-- file - 文件类图标
-- food - 食物类图标
-- logo - 商标类图标
-- map - 地图类图标
-- media - 媒体类图标
-- nature - 自然类图标
-- other - 其他类图标
-- part - 部件类图标
-- shape - 形状类图标
-- sport - 运动类图标
-- system - 系统类图标
-- transport - 交通类图标
-- user - 用户类图标
-- weather - 天气类图标
-- zodiac - 星座类图标
+- arrow
+- building
+- business
+- contact
+- crypto
+- design
+- development
+- device
+- editor
+- education
+- emoji
+- file
+- food
+- logo
+- map
+- media
+- nature
+- other
+- part
+- shape
+- sport
+- system
+- transport
+- user
+- weather
+- zodiac
 
-## 开发
+## 生成组件
+
+执行以下命令以从SVG文件生成Vue组件：
 
 ```bash
-# 生成图标组件
 npm run generate
-
-# 构建库
-npm run build
 ```
 
-## 如何贡献
+## 贡献
 
-1. Fork 该仓库
-2. 创建你的功能分支 (`git checkout -b feature/amazing-feature`)
-3. 提交你的更改 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 打开一个 Pull Request
+我们欢迎各种形式的贡献！请查看 [贡献指南](CONTRIBUTING.md) 了解如何参与。
 
-### 添加新图标
+如果你想添加新图标，请遵循以下步骤：
 
-1. 将SVG图标文件放入 `svg` 目录下对应的分类文件夹中
-2. 运行 `npm run generate` 生成组件
-3. 运行 `npm run build` 构建库
-4. 提交你的更改
+1. Fork该仓库
+2. 添加SVG图标到相应的类别目录
+3. 运行`npm run generate`生成Vue组件
+4. 提交Pull Request
 
-## 版本历史
+请确保遵循我们的 [行为准则](CODE_OF_CONDUCT.md)。
 
-### 1.0.0
-- 初始版本发布
-- 包含26个分类的图标库
-- 支持Vue 2和Vue 3
+## 发布
 
-## 发布流程
+如果你是维护者，可以按照以下步骤发布新版本：
 
-发布新版本到npm的步骤：
+1. 更新`package.json`中的版本号
+2. 运行测试(如果有)
+3. 运行构建
+   ```bash
+   npm run build
+   ```
+4. 提交变更并创建标签
+   ```bash
+   git add .
+   git commit -m "release: v1.x.x"
+   git tag v1.x.x
+   git push && git push --tags
+   ```
+5. 发布到npm
+   ```bash
+   npm login
+   npm publish
+   ```
 
-1. 更新版本号：`npm version [patch|minor|major]`
-2. 构建项目：`npm run build`（prepublishOnly脚本会自动执行）
-3. 发布到npm：`npm publish`
+## 浏览器兼容性
+
+支持所有现代浏览器，包括：
+
+- Chrome
+- Firefox
+- Safari
+- Edge
 
 ## 许可证
 
 ISC 
 
+## 支持
 
+如果你在使用过程中遇到任何问题，可以通过以下方式获取支持：
 
+- 创建 [GitHub Issue](https://github.com/18701745572/zxei-icons/issues/new/choose)
+- 查看 [常见问题解答](https://github.com/18701745572/zxei-icons/wiki/FAQ)（建议创建Wiki页面）
 
+## 星星历史
+
+[![Star History Chart](https://api.star-history.com/svg?repos=18701745572/zxei-icons&type=Date)](https://star-history.com/#18701745572/zxei-icons&Date) 

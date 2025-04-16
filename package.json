@@ -1,31 +1,36 @@
 {
   "name": "zxei-icons",
-  "version": "1.0.0",
-  "description": "SVG图标库的Vue组件封装，提供丰富的图标集合,3500+图标",
-  "main": "dist/zxei-icons.common.js",
-  "module": "dist/zxei-icons.esm.js",
-  "unpkg": "dist/zxei-icons.umd.js",
+  "version": "1.0.7",
+  "description": "一个简洁、易用的Vue3 SVG图标组件库，支持按需引入和全局注册",
+  "main": "index.js",
+  "module": "index.js",
+  "types": "types/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "components",
+    "types",
+    "index.js",
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
-    "build": "npm run generate && vue-cli-service build --target lib --name zxei-icons src/index.js",
-    "generate": "node scripts/generate-icons.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "node scripts/generate-components.js",
+    "build": "npm run generate",
     "prepublishOnly": "npm run build",
-    "publish-package": "node scripts/publish.js"
+    "test": "echo \"No test specified\""
   },
   "keywords": [
     "vue",
-    "icons",
+    "vue3",
     "svg",
-    "vue-components",
-    "ui",
-    "vue3"
+    "icons",
+    "components",
+    "ui"
   ],
-  "author": "jianghuizhong <jiang.huizhong@qq.com>",
-  "license": "ISC",
+  "author": {
+    "name": "jianghuizhong",
+    "email": "jiang.huizhong@qq.com"
+  },
+  "homepage": "https://github.com/18701745572/zxei-icons",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/18701745572/zxei-icons.git"
@@ -33,12 +38,14 @@
   "bugs": {
     "url": "https://github.com/18701745572/zxei-icons/issues"
   },
-  "homepage": "https://github.com/18701745572/zxei-icons#readme",
-  "devDependencies": {
-    "@vue/cli-service": "^5.0.8",
-    "vue": "^3.3.4"
-  },
+  "license": "ISC",
   "peerDependencies": {
-    "vue": "^3.0.0 || ^2.6.0"
+    "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "vue": "^3.3.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }

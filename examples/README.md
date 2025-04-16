@@ -1,35 +1,58 @@
-# ZXEI Icons 使用示例
+# zxei-icons 演示
 
-本目录包含了 ZXEI Icons 的使用示例。
+此目录包含 zxei-icons 的使用示例。
 
-## 运行示例
+## 运行演示
 
-1. 首先构建图标库：
+要在本地运行演示，您可以按照以下步骤操作：
+
+### 使用Vite
+
+1. 创建一个新的Vue3项目：
 
 ```bash
-# 在项目根目录下
+npm create vite@latest my-icons-demo -- --template vue
+cd my-icons-demo
+```
+
+2. 安装依赖：
+
+```bash
 npm install
-npm run generate
-npm run build
+npm install zxei-icons
 ```
 
-2. 安装示例依赖项：
+3. 将 `Demo.vue` 文件复制到您的项目的 `src/components/` 目录下。
+
+4. 修改 `src/App.vue` 文件以引入演示组件：
+
+```vue
+<template>
+  <div>
+    <Demo />
+  </div>
+</template>
+
+<script setup>
+import Demo from './components/Demo.vue'
+</script>
+```
+
+5. 启动开发服务器：
 
 ```bash
-# 在examples目录下
-npm install
+npm run dev
 ```
 
-3. 运行示例：
+### 直接在现有Vue3项目中使用
 
-```bash
-npm run serve
-```
+只需将 `Demo.vue` 复制到您的项目中，然后导入并使用它。
 
-4. 在浏览器中打开 http://localhost:8080 查看示例。
+## 重要事项
 
-## 示例说明
+- 确保您的项目使用Vue 3
+- 确保您已经安装了 `zxei-icons` 包：`npm install zxei-icons`
 
-- `IconDemo.vue` - 展示了图标的基本用法、自定义大小和颜色
-- `CategoryDemo.vue` - 展示了如何按类别导入和使用图标
-- `App.vue` - 示例应用的入口组件 
+## 自定义演示
+
+您可以修改 `Demo.vue` 文件来尝试不同的图标和配置。 
